@@ -63,18 +63,12 @@ class GitController extends Controller
         return response()->json($data);
     }
     
-    public function destroy($id)
-    {
-        $result = Git::destroy('id', $id);
+    public function destroy($id){
+        $result = Git::where('id',$id)->first();
 
-        if($result){
-            $data['code'] = 200;
-            $data['result'] = $result;
-        } else {
-            $data['code'] = 500;
-            $data['result'] = 'Error';
-        }
-        return response()->json($data);
+        $result->delete();
+
+        return redirect('/git');
     }
 
     public function update(Request $request, $id)
